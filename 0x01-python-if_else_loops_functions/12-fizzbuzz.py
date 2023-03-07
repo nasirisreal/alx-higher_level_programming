@@ -1,4 +1,4 @@
-#1/usr/bin/python3
+#!/usr/bin/python3
 def fizzbuzz():
      for number in range(1, 100):
         if number % 3 == 0 and number % 5 == 0:
