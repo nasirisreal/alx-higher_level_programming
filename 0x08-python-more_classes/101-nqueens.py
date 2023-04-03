@@ -1,9 +1,8 @@
 #!/usr/bin/python3
-"""
 
+"""
 This module contains an algorithm that resolves the N-Queen puzzle
 using backtracking
-
 """
 
 
@@ -17,17 +16,12 @@ def isSafe(m_queen, nqueen):
     Returns:
         True: when queens can't kill each other
         False: when some of the queens can kill
-
     """
-
     for i in range(nqueen):
-
         if m_queen[i] == m_queen[nqueen]:
             return False
-
         if abs(m_queen[i] - m_queen[nqueen]) == abs(i - nqueen):
             return False
-
     return True
 
 
@@ -37,14 +31,8 @@ def print_result(m_queen, nqueen):
     Args:
         m_queen: array that has the queens positions
         nqueen: queen number
-
     """
-
-    res = []
-
-    for i in range(nqueen):
-        res.append([i, m_queen[i]])
-
+    res = [(i, m_queen[i]) for i in range(nqueen)]
     print(res)
 
 
@@ -54,43 +42,37 @@ def Queen(m_queen, nqueen):
     Args:
         m_queen: array that has the queens positions
         nqueen: queen number
-
     """
-
-    if nqueen is len(m_queen):
+    if nqueen == len(m_queen):
         print_result(m_queen, nqueen)
         return
 
     m_queen[nqueen] = -1
 
-    while((m_queen[nqueen] < len(m_queen) - 1)):
+    while m_queen[nqueen] < len(m_queen) - 1:
 
         m_queen[nqueen] += 1
 
         if isSafe(m_queen, nqueen) is True:
 
-            if nqueen is not len(m_queen):
+            if nqueen != len(m_queen):
                 Queen(m_queen, nqueen + 1)
 
 
-def solveNQueen(size):
+def solveNQueens(size):
     """ Function that invokes the Backtracking algorithm
 
     Args:
         size: size of the chessboard
-
     """
-
     m_queen = [-1 for i in range(size)]
-
     Queen(m_queen, 0)
 
 
 if __name__ == '__main__':
-
     import sys
 
-    if len(sys.argv) == 1 or len(sys.argv) > 2:
+    if len(sys.argv) != 2:
         print("Usage: nqueens N")
         sys.exit(1)
 
@@ -104,4 +86,5 @@ if __name__ == '__main__':
         print("N must be at least 4")
         sys.exit(1)
 
-    solveNQueen(size)
+    solveNQueens(size)
+
