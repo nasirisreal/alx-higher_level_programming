@@ -1,107 +1,121 @@
-#!/usr/bin/python3
-"""
+#!/usr/bin/env python3
 
-This module contains an algorithm that resolves the N-Queen puzzle
-using backtracking
+import sys
 
-"""
 
-def isSafe(m_queen, nqueen):
-    """ Method that determines if the queens can or can't kill each other
+def is_safe(board, row, col, n):
+    """
+    Check if a queen can be placed in a given row and column without
+    attacking any other queens on the board.
 
     Args:
-        m_queen: array that has the queens positions
-        nqueen: queen number
+        board: The current state of the board.
+        row: The row to check.
+        col: The column to check.
+        n: The size of the board.
 
     Returns:
-        True: when queens can't kill each other
-        False: when some of the queens can kill
-
+        True if the placement is safe, False otherwise.
     """
 
-    for i in range(nqueen):
-
-        if m_queen[i] == m_queen[nqueen]:
+    # Check if there is a queen in the same column
+    for i in range(row):
+        if board[i][col] == "Q":
             return False
 
-        if abs(m_queen[i] - m_queen[nqueen]) == abs(i - nqueen):
+    # Check if there is a queen on the diagonal up-left
+    i, j = row - 1, col - 1
+    while i >= 0 and j >= 0:
+        if board[i][j] == "Q":
             return False
+        i -= 1
+        j -= 1
+
+    # Check if there is a queen on the diagonal up-right
+    i, j = row - 1, col + 1
+    while i >= 0 and j < n:
+        if board[i][j] == "Q":
+            return False
+        i -= 1
+        j += 1
 
     return True
 
 
-def print_result(m_queen, nqueen):
-    """ Method that prints the list with the Queens positions
+def solve_n_queens(n):
+    """
+    Find all possible solutions to the n-queens problem.
 
     Args:
-        m_queen: array that has the queens positions
-        nqueen: queen number
+        n: The size of the board.
 
+    Returns:
+        A list of all possible solutions, where each solution is a list of
+        strings representing the board with "Q" indicating a queen and "." 
+        indicating an empty square.
     """
 
-    res = []
+    def backtrack(board, row):
+        """
+        Recursive function to place queens on the board.
 
-    for i in range(nqueen):
-        res.append([i, m_queen[i]])
+        Args:
+            board: The current state of the board.
+            row: The current row to place a queen in.
 
-    print(res)
+        Returns:
+            A list of all possible solutions found from this point on.
+        """
 
+        if row == n:
+            # All queens have been placed, this is a solution
+            return [board[:]]
 
-def Queen(m_queen, nqueen):
-    """ Recursive function that executes the Backtracking algorithm
+        solutions = []
 
-    Args:
-        m_queen: array that has the queens positions
-        nqueen: queen number
+        for col in range(n):
+            if is_safe(board, row, col, n):
+                # Place a queen in this position
+                board[row][col] = "Q"
 
-    """
+                # Recursively search for solutions
+                solutions += backtrack(board, row + 1)
 
-    if nqueen == len(m_queen):
-        print_result(m_queen, nqueen)
-        return
+                # Remove the queen from this position
+                board[row][col] = "."
 
-    m_queen[nqueen] = 0
+        return solutions
 
-    while(m_queen[nqueen] < len(m_queen)):
+    # Initialize an empty board
+    board = [["." for _ in range(n)] for _ in range(n)]
 
-        m_queen[nqueen] += 1
+    # Find all possible solutions
+    solutions = backtrack(board, 0)
 
-        if isSafe(m_queen, nqueen) is True:
-
-            if nqueen != len(m_queen):
-                Queen(m_queen, nqueen + 1)
-
-
-def solveNQueen(size):
-    """ Function that invokes the Backtracking algorithm
-
-    Args:
-        size: size of the chessboard
-
-    """
-
-    m_queen = [0 for i in range(size)]
-
-    Queen(m_queen, 0)
+    return solutions
 
 
-if __name__ == '__main__':
-
-    import sys
-
-    if len(sys.argv) == 1 or len(sys.argv) > 2:
+if __name__ == "__main__":
+    # Parse the command line arguments
+    if len(sys.argv) != 2:
         print("Usage: nqueens N")
         sys.exit(1)
 
     try:
-        size = int(sys.argv[1])
-    except:
+        n = int(sys.argv[1])
+    except ValueError:
         print("N must be a number")
         sys.exit(1)
 
-    if size < 4:
+    if n < 4:
         print("N must be at least 4")
         sys.exit(1)
 
-    solveNQueen(size)
+    # Solve the problem and print the solutions
+    solutions = solve_n_queens(n)
+
+    for solution in solutions:
+        for row in solution:
+            print(" ".join(row))
+        print()
 
