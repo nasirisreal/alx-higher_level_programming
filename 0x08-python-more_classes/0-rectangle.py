@@ -2,4 +2,4 @@
 """Define a class Rectangle """
 
 class Rectangle:
-    """Represent a rectangle """
+    """ Represents an empty class rectangle """
