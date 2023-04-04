@@ -97,7 +97,7 @@ if __name__ == '__main__':
 
     try:
         size = int(sys.argv[1])
-    except:
+    except Exception:
         print("N must be a number")
         sys.exit(1)
 
