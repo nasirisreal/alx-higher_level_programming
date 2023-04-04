@@ -1,6 +1,15 @@
 #!/usr/bin/python3
+"""
+
+This is a module that containts a clas that avoids
+dynmaically created attributes
+
+"""
+
+
 class LockedClass:
-    def __setattr__(self, key, value):
-        if key != 'first_name':
-            raise AttributeError(f"{self.__class__.__name__} object has no attribute '{key}'")
-        self.__dict__[key] = value
+    __slots__ = ['first_name']
+
+    def __init__(first_name):
+        """ Init method """
+        pass
