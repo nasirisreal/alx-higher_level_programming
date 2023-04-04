@@ -11,5 +11,8 @@ class LockedClass:
     __slots__ = ['first_name']
 
     def __init__(first_name):
-        """ Init method """
+        """
+        Initialize an instance of LockedClass with a first name.
+        :param first_name: The first name of the instance.
+        """
         pass
