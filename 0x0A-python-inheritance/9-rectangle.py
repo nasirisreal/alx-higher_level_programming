@@ -7,7 +7,7 @@ class Rectangle(BaseGeometry):
     """Class that defines a rectangle from BaseGeometry Class"""
 
     def __init__(self, width, height):
-        """ Initializes instance """
+        """Initializes instance"""
 
         Args:
             width (int): The width of the new Rectangle.
@@ -19,11 +19,11 @@ class Rectangle(BaseGeometry):
         self.__height = height
 
     def area(self):
-        """Method that returns the area of the instance"""
+        """Return the area of the rectangle."""
         return self.__width * self.__height
 
     def __str__(self):
         """Return the print() and str() representation of a Rectangle."""
-        string = "[" + str(self.__class__.__name__) + "]"
+        string = "[" + str(self.__class__.__name__) + "] "
         string += str(self.__width) + "/" + str(self.__height)
         return string
