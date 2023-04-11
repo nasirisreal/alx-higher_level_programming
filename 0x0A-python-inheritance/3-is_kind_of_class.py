@@ -7,7 +7,7 @@ def is_kind_of_class(obj, a_class):
 
     Args:
         obj (any): object
-        a_class: class type
+        a_class (type): class type
     Returns:
         True if obj is an instance of a_class
         False, otherwise
