@@ -11,6 +11,7 @@ def pascal_triangle(n):
     """
     matrix = []
     prev_row = []
+
     for i in range(n):
         row = []
         left_index = -1
@@ -24,5 +25,6 @@ def pascal_triangle(n):
             right_index += 1
         matrix.append(row)
         prev_row = row[:]
+    
     return matrix
 
