@@ -1,38 +1,29 @@
 #!/usr/bin/python3
-"""Module to parse log files and print HTTP status codes"""
+""" Module to print status code """
 
 import sys
+import random
+import datetime
+from time import sleep
 
 
-class LogParser:
-    """Class to parse log files and print HTTP status codes"""
-
+class Magic:
+    """ Class to generates instances with dict and size"""
     def __init__(self):
-        """Initialize instance variables"""
-        self.status_codes = {
-            '200': 0,
-            '301': 0,
-            '400': 0,
-            '401': 0,
-            '403': 0,
-            '404': 0,
-            '405': 0,
-            '500': 0
-        }
-        self.total_size = 0
-        self.lines_read = 0
+        """ Init method """
+        self.dic = {}
+        self.size = 0
 
-    def parse_log(self, line):
-        """Parse a line of the log file"""
-        try:
-            elements = line.split()
-            status_code = elements[-2]
-            if status_code in self.status_codes:
-                self.status_codes[status_code] += 1
-            size = int(elements[-1])
-            self.total_size += size
-        except (IndexError, ValueError):
-            pass
+    def init_dic(self):
+        """ Initialize dict """
+        self.dic['200'] = 0
+        self.dic['301'] = 0
+        self.dic['400'] = 0
+        self.dic['401'] = 0
+        self.dic['403'] = 0
+        self.dic['404'] = 0
+        self.dic['405'] = 0
+        self.dic['500'] = 0
 
     def add_status_code(self, status):
         """ add repeated number to the status code """
