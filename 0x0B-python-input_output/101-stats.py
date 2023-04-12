@@ -1,59 +1,66 @@
 #!/usr/bin/python3
-"""Module to print status code"""
+"""Module to parse log files and print HTTP status codes"""
 
 import sys
 
 
-class Magic:
-    """Class to generates instances with dict and size"""
-    
+class LogParser:
+    """Class to parse log files and print HTTP status codes"""
+
     def __init__(self):
-        """Init method"""
-        self.dic = {}
-        self.size = 0
+        """Initialize instance variables"""
+        self.status_codes = {
+            '200': 0,
+            '301': 0,
+            '400': 0,
+            '401': 0,
+            '403': 0,
+            '404': 0,
+            '405': 0,
+            '500': 0
+        }
+        self.total_size = 0
+        self.lines_read = 0
 
-    def init_dic(self):
-        """Initialize dict"""
-        self.dic['200'] = 0
-        self.dic['301'] = 0
-        self.dic['400'] = 0
-        self.dic['401'] = 0
-        self.dic['403'] = 0
-        self.dic['404'] = 0
-        self.dic['405'] = 0
-        self.dic['500'] = 0
+    def parse_log(self, line):
+        """Parse a line of the log file"""
+        try:
+            elements = line.split()
+            status_code = elements[-2]
+            if status_code in self.status_codes:
+                self.status_codes[status_code] += 1
+            size = int(elements[-1])
+            self.total_size += size
+        except (IndexError, ValueError):
+            pass
 
-    def add_status_code(self, status):
-        """add repeated number to the status code"""
-        if status in self.dic:
-            self.dic[status] += 1
+    def print_summary(self):
+        """Print summary of HTTP status codes and total size"""
+        print("Summary of HTTP status codes and total size:")
+        for code in sorted(self.status_codes):
+            count = self.status_codes[code]
+            if count != 0:
+                print(f"{code}: {count}")
+        print(f"Total size: {self.total_size} bytes")
 
-    def print_info(self, sig=0, frame=0):
-        """ print status code"""
-        print("File size: {:d}".format(self.size))
-        for key in sorted(self.dic.keys()):
-            if self.dic[key] != 0:
-                print("{}: {:d}".format(key, self.dic[key]))
+    def process_log_file(self, filename):
+        """Process a log file"""
+        try:
+            with open(filename, 'r') as log_file:
+                for line in log_file:
+                    self.parse_log(line)
+                    self.lines_read += 1
+                    if self.lines_read % 10 == 0:
+                        self.print_summary()
+        except FileNotFoundError:
+            print(f"Error: {filename} not found")
 
 
 if __name__ == "__main__":
-    magic = Magic()
-    magic.init_dic()
-    nlines = 0
-
-    try:
-        for line in sys.stdin:
-            if nlines % 10 == 0 and nlines != 0:
-                magic.print_info()
-
-            try:
-                list_line = [x for x in line.split(" ") if x.strip()]
-                magic.add_status_code(list_line[-2])
-                magic.size += int(list_line[-1].strip("\n"))
-            except:
-                pass
-            nlines += 1
-    except KeyboardInterrupt:
-        magic.print_info()
-        raise
-    magic.print_info()
+    if len(sys.argv) < 2:
+        print("Usage: python log_parser.py <filename>")
+    else:
+        filename = sys.argv[1]
+        log_parser = LogParser()
+        log_parser.process_log_file(filename)
+        log_parser.print_summary()
