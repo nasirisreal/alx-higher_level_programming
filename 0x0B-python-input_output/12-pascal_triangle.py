@@ -1,8 +1,5 @@
 #!/usr/bin/python3
-def pascal_triangle(n):
-
-
-    """ Function that returns the pascal triangle
+""" Function that returns the pascal triangle
 
     Args:
         n: number of lines
@@ -12,21 +9,15 @@ def pascal_triangle(n):
 
     """
 
-    matrix = []
-    prev = []
+def pascal_triangle(n):
+    if n <= 0:
+        return []
+    triangle = [[1]]
+    for i in range(1, n):
+        row = [1]
+        for j in range(1, i):
+            row.append(triangle[i-1][j-1] + triangle[i-1][j])
+        row.append(1)
+        triangle.append(row)
+    return triangle
 
-    for i in range(n):
-        res_list = []
-        p1 = -1
-        p2 = 0
-        for j in range(len(prev) + 1):
-            if p1 == -1 or p2 == len(prev):
-                res_list += [1]
-            else:
-                res_list += [prev[p1] + prev[p2]]
-            p1 += 1
-            p2 += 1
-        matrix.append(res_list)
-        prev = res_list[:]
-
-    return matrix
