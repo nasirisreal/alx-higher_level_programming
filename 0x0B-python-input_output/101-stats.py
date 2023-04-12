@@ -22,6 +22,18 @@ class LogParser:
         self.total_size = 0
         self.lines_read = 0
 
+    def parse_log(self, line):
+        """Parse a line of the log file"""
+        try:
+            elements = line.split()
+            status_code = elements[-2]
+            if status_code in self.status_codes:
+                self.status_codes[status_code] += 1
+            size = int(elements[-1])
+            self.total_size += size
+        except (IndexError, ValueError):
+            pass
+
     def add_status_code(self, status):
         """ add repeated number to the status code """
         if status in self.dic:
