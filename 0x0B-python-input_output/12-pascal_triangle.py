@@ -27,4 +27,3 @@ def pascal_triangle(n):
         prev_row = row[:]
     
     return matrix
-
