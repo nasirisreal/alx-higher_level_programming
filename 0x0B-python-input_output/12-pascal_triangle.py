@@ -9,14 +9,12 @@ def pascal_triangle(n):
     Returns:
         list of lists: A matrix of n rows containing the values of Pascal's triangle.
     """
-    triangle = []
-    for i in range(n):
+    triangle = [[1]]
+    for i in range(1, n):
         row = [1]
-        if i > 0:
-            prev_row = triangle[i-1]
-            for j in range(len(prev_row)-1):
-                row.append(prev_row[j] + prev_row[j+1])
-            row.append(1)
+        for j in range(1, i):
+            row.append(triangle[i-1][j-1] + triangle[i-1][j])
+        row.append(1)
         triangle.append(row)
     return triangle
 
