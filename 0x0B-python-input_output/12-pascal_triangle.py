@@ -1,4 +1,5 @@
 #!/usr/bin/python3
+
 def pascal_triangle(n):
     """ Function that returns the pascal triangle
 
@@ -28,3 +29,9 @@ def pascal_triangle(n):
         prev = res_list[:]
 
     return matrix
+
+if __name__ == "__main__":
+    n = 5
+    triangle = pascal_triangle(n)
+    for row in triangle:
+        print(' '.join([str(elem) for elem in row]))
