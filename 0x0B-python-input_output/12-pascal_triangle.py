@@ -10,28 +10,10 @@ def pascal_triangle(n):
         matrix: a matrix with the pascal triangle
 
     """
-
-    matrix = []
-    prev = []
-
-    for i in range(n):
-        res_list = []
-        p1 = -1
-        p2 = 0
-        for j in range(len(prev) + 1):
-            if p1 == -1 or p2 == len(prev):
-                res_list += [1]
-            else:
-                res_list += [prev[p1] + prev[p2]]
-            p1 += 1
-            p2 += 1
-        matrix.append(res_list)
-        prev = res_list[:]
-
-    return matrix
-
-if __name__ == "__main__":
-    n = 5
-    triangle = pascal_triangle(n)
-    for row in triangle:
-        print(' '.join([str(elem) for elem in row]))
+    trow = [1]
+   y = [0]
+   for x in range(max(n,0)):
+      print(trow)
+      trow=[l+r for l,r in zip(trow+y, y+trow)]
+   return n>=1
+pascal_triangle(5)
