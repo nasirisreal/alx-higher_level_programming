@@ -7,7 +7,7 @@ def pascal_triangle(n):
         n (int): Number of rows in the matrix.
 
     Returns:
-        list of lists: A matrix of n rows containing the values of Pascal's triangle.
+        list of lists: A matrix of n rows containing the values of Pascal tri
     """
     triangle = [[1]]
     for i in range(1, n):
@@ -18,4 +18,4 @@ def pascal_triangle(n):
         triangle.append(row)
     return triangle
 
-print(pascal_triangle(5))
+        print(pascal_triangle(5))
