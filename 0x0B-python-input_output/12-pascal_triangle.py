@@ -10,10 +10,20 @@ def pascal_triangle(n):
         matrix: a matrix with the pascal triangle
 
     """
-    trow = [1]
-   y = [0]
-   for x in range(max(n,0)):
-      print(trow)
-      trow=[l+r for l,r in zip(trow+y, y+trow)]
-   return n>=1
-pascal_triangle(5)
+    arr = [1]
+    temp = []
+    print("pascal's triangle of", n, "Rows...")
+    for i in range(n):
+        print("rows", i+1, end=" : ")
+        for j in range(len(arr)):
+            print(arr[j], end=' ')
+        print()
+        temp.append(1)
+        for j in range(len(arr)-1):
+            temp.append(arr[j] + arr[j + 1])
+        temp.append(1)
+        arr = temp
+        temp = []
+
+n = int(input("Enter the number for the pascal triangle: "))
+pascal_triangle(n)
