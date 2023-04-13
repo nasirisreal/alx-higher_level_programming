@@ -26,4 +26,4 @@ def pascal_triangle(n):
         temp = []
 
 n = int(input("Enter the number for the pascal triangle: "))
-pascal_triangle(n)
+pascal_triangle(5)
