@@ -2,21 +2,15 @@
 """
 12-main
 """
-from typing import List
+pascal_triangle = __import__('12-pascal_triangle').pascal_triangle
 
-def pascal_triangle(n: int) -> List[List[int]]:
+def print_triangle(triangle):
     """
-    Returns a list of lists representing the first n rows of Pascal's triangle.
+    Print the triangle
     """
-    triangle = []
-    for i in range(n):
-        row = [1] * (i + 1)
-        for j in range(1, i):
-            row[j] = triangle[i - 1][j - 1] + triangle[i - 1][j]
-        triangle.append(row)
-    return triangle
-
-if __name__ == "__main__":
-    triangle = pascal_triangle(5)
     for row in triangle:
         print("[{}]".format(",".join([str(x) for x in row])))
+
+
+if __name__ == "__main__":
+    print_triangle(pascal_triangle(5))
